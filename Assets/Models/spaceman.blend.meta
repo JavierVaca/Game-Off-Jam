@@ -1,9 +1,17 @@
 fileFormatVersion: 2
-guid: 8119ecea4c83b971288bc7b719d7b989
+guid: dcc12f192edbe1433bff232e9da70c8e
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
-  externalObjects: {}
+  internalIDToNameTable:
+  - first:
+      74: -623603649343465320
+    second: Scene
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lowpolytexture
+    second: {fileID: 2100000, guid: 431c62e75bd99846a9c697627e57ce6f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

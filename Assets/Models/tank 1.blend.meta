@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c18ce12165bbbd33bea712e5c72f23a
+guid: ff5006584a71cc4cc833365c38b17faa
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lowpolymaterial
+      name: Material
     second: {fileID: 2100000, guid: 431c62e75bd99846a9c697627e57ce6f, type: 2}
   materials:
     materialImportMode: 1
