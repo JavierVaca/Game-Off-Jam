@@ -1,4 +1,4 @@
-interface ITroop 
+public interface ITroop 
 {
     int Health {get; set;}
     int Damage { get; set; }
@@ -10,4 +10,5 @@ interface ITroop
     void Attack();
     bool ChangeHealth(int i);
     bool Die();
+    void ToggleSelectionVisual(bool v);
 }
