@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface ITroop 
 {
     int Health {get; set;}
@@ -6,7 +8,7 @@ public interface ITroop
     float AttackRange { get; set; }
     float Speed { get; set; }
 
-    void Move();
+    void Move(Vector3 point);
     void Attack();
     bool ChangeHealth(int i);
     bool Die();

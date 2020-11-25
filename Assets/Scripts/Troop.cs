@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
+using System;
 
 public class Troop : MonoBehaviour, ITroop
 {
@@ -26,6 +28,7 @@ public class Troop : MonoBehaviour, ITroop
     public float Speed { get; set; }
 
     public Image selected;
+    private NavMeshAgent navAgent;
 
     public void Attack()
     {
@@ -42,9 +45,9 @@ public class Troop : MonoBehaviour, ITroop
         throw new System.NotImplementedException();
     }
 
-    public void Move()
+    public void Move(Vector3 point)
     {
-        throw new System.NotImplementedException();
+        navAgent.SetDestination(point);
     }
 
     public void ToggleSelectionVisual(bool select)
@@ -62,6 +65,12 @@ public class Troop : MonoBehaviour, ITroop
         }
         
     }
+    
+    internal void Initialize()
+    {
+        navAgent = GetComponent<NavMeshAgent>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

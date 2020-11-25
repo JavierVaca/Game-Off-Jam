@@ -8,10 +8,12 @@ public class TroopSelector : MonoBehaviour
     List<Troop> selectedTroops;
     public RectTransform selectionBox;
     public LayerMask unitLayerMask;
+    public LayerMask terrainLayerMask;
     private Camera cam;
     public Player player;
     private Vector2 startPos;
-    
+    private TroopMover troopMover;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class TroopSelector : MonoBehaviour
         cam = Camera.main;
         selectedTroops = new List<Troop>();
         player = GetComponent<Player>();
+        troopMover = new TroopMover();
     }
 
     // Update is called once per frame
@@ -42,6 +45,17 @@ public class TroopSelector : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             UpdateSelectionBox(Input.mousePosition);
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit, 600, terrainLayerMask.value))
+            {
+                troopMover.MoveTroopsToPoint(hit.point, selectedTroops);
+            }
         }
     }
 

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spaceship : MonoBehaviour
+public class Spaceship : Troop
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        base.Initialize();
     }
 
     // Update is called once per frame
