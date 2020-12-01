@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class TroopSelector : MonoBehaviour
 {
-    List<Troop> selectedTroops;
+    List<Troop> selectedSoldiers;
+    List<Troop> selectedVehicles;
     public RectTransform selectionBox;
     public LayerMask unitLayerMask;
     public LayerMask terrainLayerMask;
@@ -19,7 +20,9 @@ public class TroopSelector : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        selectedTroops = new List<Troop>();
+        selectedSoldiers = new List<Troop>();
+        selectedVehicles = new List<Troop>();
+
         player = GetComponent<Player>();
         troopMover = new TroopMover();
     }
@@ -30,7 +33,8 @@ public class TroopSelector : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             ToggleSelectionVisual(false);
-            selectedTroops = new List<Troop>();
+            selectedSoldiers = new List<Troop>();
+            selectedVehicles = new List<Troop>();
             
             TrySelect(Input.mousePosition);
             startPos = Input.mousePosition;
@@ -54,7 +58,7 @@ public class TroopSelector : MonoBehaviour
 
             if(Physics.Raycast(ray, out hit, 600, terrainLayerMask.value))
             {
-                troopMover.MoveTroopsToPoint(hit.point, selectedTroops);
+                troopMover.MoveTroopsToPoint(hit.point, selectedSoldiers, selectedVehicles);
             }
         }
     }
@@ -69,7 +73,7 @@ public class TroopSelector : MonoBehaviour
             Troop troop = hit.collider.GetComponent<Troop>();
             if(player.IsPlayer(troop))
             {
-                selectedTroops.Add(troop);
+                selectedSoldiers.Add(troop);
                 troop.ToggleSelectionVisual(true);
             }
         }
@@ -94,20 +98,27 @@ public class TroopSelector : MonoBehaviour
         Vector2 min = selectionBox.anchoredPosition - (selectionBox.sizeDelta/2);
         Vector2 max = selectionBox.anchoredPosition + (selectionBox.sizeDelta/2);
 
-        foreach(Troop troop in player.troops)
+        foreach(Troop troop in player.GetTroops())
         {
             Vector3 screenPos = cam.WorldToScreenPoint(troop.transform.position);
 
             if(screenPos.x > min.x && screenPos.x < max.x && screenPos.y > min.y && screenPos.y < max.y)
             {
-                selectedTroops.Add(troop);
+                if(troop is Soldier)
+                    selectedSoldiers.Add(troop);
+                else
+                    selectedVehicles.Add(troop);
             }
         }
     }
 
     private void ToggleSelectionVisual(bool selected)
     {
-        foreach(Troop troop in selectedTroops)
+        foreach(Troop troop in selectedSoldiers)
+        {
+            troop.ToggleSelectionVisual(selected);
+        }
+        foreach(Troop troop in selectedVehicles)
         {
             troop.ToggleSelectionVisual(selected);
         }

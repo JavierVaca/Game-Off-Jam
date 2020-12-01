@@ -28,19 +28,18 @@ public class Troop : MonoBehaviour, ITroop
 
     public MeshRenderer selected;
     public HealthBar healthBar;
-    public Laser laser;
     internal NavMeshAgent navAgent;
     internal Troop enemyTarget;
     private bool Dead;
     internal bool attacking;
+    internal LaserManager laserManager;
 
     public void Attack()
     {
-        if(enemyTarget != null && !enemyTarget.Dead)
+        if(enemyTarget != null && !enemyTarget.Dead && !Dead)
         {
             enemyTarget.ChangeHealth(Damage);
-            var copyLaser = Instantiate(laser, transform.position, transform.rotation);
-            copyLaser.target = enemyTarget.transform;
+            laserManager.SetActive(transform.position, enemyTarget.gameObject);
         }
         else
         {
@@ -95,6 +94,7 @@ public class Troop : MonoBehaviour, ITroop
     {
         navAgent = GetComponent<NavMeshAgent>();
         CurrentHealth = MaxHealth;
+        laserManager = FindObjectOfType<LaserManager>();
     }
 
    
@@ -119,7 +119,7 @@ public class Troop : MonoBehaviour, ITroop
     }
 
     void OnTriggerStay(Collider other) {
-         if(!other.isTrigger && other.gameObject.tag == "Enemy" && !attacking)
+         if(!other.isTrigger && other.gameObject.tag != tag && !attacking)
         {
             Troop enemy; 
             other.gameObject.TryGetComponent<Troop>(out enemy);
